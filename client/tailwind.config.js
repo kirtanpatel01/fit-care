@@ -15,20 +15,6 @@ export default {
         borderLight: '#94a3b8',
         hBlue: '#3b82f6'
       },
-      fontFamily: {
-        asap: ['Asap', 'serif'], // Add the "Asap" font family
-      },
-      fontWeight: {
-        lightest: 100,
-        lighter: 200, // Extra Light
-        light: 300,
-        regular: 400,
-        medium: 500,
-        semibold: 600,
-        bold: 700,
-        extrabold: 800,
-        black: 900
-      },
     },
   },
   plugins: [],

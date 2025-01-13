@@ -39,3 +39,7 @@
       scrollbar-width: none; /* For Firefox */
     }
   }
+
+* {
+  font-family: "Outfit", serif;
+}
