@@ -3,7 +3,7 @@ import React from 'react'
 function Button({ text, onClick, className='' }, props) {
   return (
     <button
-    className={`px-4 py-2 rounded-md text-white ${className}`}
+    className={`px-4 py-2 rounded-md text-white hover:bg-secondary ${className}`}
     onClick={onClick}
     {...props}
     >{text}</button>

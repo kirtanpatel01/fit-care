@@ -1,35 +1,39 @@
-    .input-bg {
-    @apply flex flex-col gap-2 px-4 py-3 rounded-md outline-none border border-borderLight bg-baseLight50 dark:bg-slate-900;
-  }
-  
-  .input-bg-thin {
-    @apply w-fit flex flex-col px-2 py-1 rounded-md outline-none border-2 border-borderLight bg-opacity-55;
-  }
-  
-  .radio-btn-span {
-    @apply w-5 h-5 rounded-full border-2 border-borderLight peer-checked:bg-hBlue peer-checked:border-hBlue;
-  }
-  
-  .checkbox-btn-span {
-    @apply w-5 h-5 rounded-sm border-2 border-borderLight peer-checked:bg-hBlue peer-checked:border-hBlue;
-  }
-  
-  .radio-label {
-    @apply flex items-center gap-2 cursor-pointer hover:bg-hBlue hover:bg-opacity-20 p-0 min-[320px]:p-2 rounded-md;
-  }
-  
-  .vr-line {
-    @apply w-full md:w-[1px] h-[1px] md:h-full bg-borderLight;
-  }
-  
-  .item-bg {
-    @apply px-4 py-2 border border-borderLight rounded-2xl bg-baseLight50 dark:bg-baseDark900 peer-checked:bg-opacity-100 hover:bg-borderLight hover:bg-opacity-30 dark:hover:bg-baseDark;
-  }
-  
-  .btn-container {
-    @apply w-full flex justify-between;
-  }
-  
-  .btn {
-    @apply px-4 py-2 bg-borderLight rounded-md text-white hover:bg-black;
-  }
+.input-bg {
+  @apply flex flex-col gap-2 px-4 py-3 rounded-md outline-none border border-borderLight bg-baseLight50 dark:bg-slate-900;
+}
+
+.input-bg-thin {
+  @apply w-fit flex flex-col px-2 py-1 rounded-md outline-none border-2 border-borderLight bg-opacity-55;
+}
+
+.radio-btn-span {
+  @apply w-5 h-5 rounded-full border-2 border-borderLight peer-checked:bg-secondary peer-checked:border-secondary;
+}
+
+.checkbox-btn-span {
+  @apply w-5 h-5 rounded-sm border-2 border-borderLight peer-checked:bg-secondary peer-checked:border-secondary;
+}
+
+.radio-label {
+  @apply flex items-center gap-2 cursor-pointer btn-hover p-0 min-[320px]:p-2 rounded-md;
+}
+
+.vr-line {
+  @apply w-full md:w-[1px] h-[1px] md:h-full bg-borderLight;
+}
+
+.item-bg {
+  @apply px-4 py-2 border border-borderLight rounded-2xl bg-baseLight50 dark:bg-baseDark900 ;
+}
+
+.btn-container {
+  @apply w-full flex justify-between;
+}
+
+.btn {
+  @apply px-4 py-2 bg-borderLight rounded-md text-white hover:bg-black;
+}
+
+.btn-hover {
+  @apply hover:bg-hBlue hover:bg-opacity-25 hover:text-secondary
+}

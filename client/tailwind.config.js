@@ -13,7 +13,8 @@ export default {
         baseLight50: '#f8fafc',
         baseDark900: '#0f172a',
         borderLight: '#94a3b8',
-        hBlue: '#3b82f6'
+        hBlue: '#3b82f6',
+        secondary: '#f97316'
       },
     },
   },

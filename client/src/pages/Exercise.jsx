@@ -2,7 +2,9 @@ import React from 'react'
 
 function Exercise() {
   return (
-    <div>Exercise</div>
+    <div>
+      Kasrat karne chonmoni!
+    </div>
   )
 }
 

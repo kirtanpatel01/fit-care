@@ -50,7 +50,7 @@ function Sidebar() {
           )}
         </button>
         <div className="w-full flex flex-col items-center gap-4">
-          <span className="text-4xl font-bold tracking-wider">
+          <span className="text-4xl font-bold tracking-wider text-secondary">
             Fit Care
           </span>
           <div className="h-[1px] w-full bg-borderLight"></div>
@@ -64,7 +64,7 @@ function Sidebar() {
               to={link.path}
               key={link.title}
               onClick={() => setIsVisible(false)}
-              className="w-fit min-w-40 text-center border border-borderLight bg-baseLight50 dark:bg-baseDark900 hover:bg-hBlue hover:bg-opacity-25 dark:hover:bg-hBlue dark:hover:bg-opacity-25 p-2 rounded-xl cursor-pointer font-medium text-xl"
+              className="w-fit min-w-40 text-center border border-borderLight bg-baseLight50 dark:bg-baseDark900 btn-hover p-2 rounded-xl cursor-pointer font-medium text-xl hover:text-secondary"
             >
               {link.title}
             </Link>

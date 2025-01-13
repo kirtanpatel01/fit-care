@@ -40,6 +40,12 @@
     }
   }
 
-* {
+body {
   font-family: "Outfit", serif;
+}
+
+.cormorant-garamond-bold {
+  font-family: "Cormorant Garamond", serif !important;
+  font-weight: 700;
+  font-style: normal;
 }

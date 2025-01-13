@@ -314,7 +314,7 @@ function Foods() {
           {foodData.map((food) => (
             <div
               key={food.id}
-              className="item-bg min-w-32 h-fit cursor-pointer"
+              className="item-bg min-w-32 h-fit cursor-pointer btn-hover"
               level={food.foodName}
               desc={food.calories}
               onClick={() => handleFoodSelection(food)}
