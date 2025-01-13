@@ -2,7 +2,10 @@ import React from 'react'
 
 function Meals() {
   return (
-    <div>Meals</div>
+    <div className='flex flex-col gap-16'>
+      <span>Bol su khavu che tare ?</span>
+      
+    </div>
   )
 }
 

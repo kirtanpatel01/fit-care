@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <div className="bg-baseLight dark:bg-baseDark min-h-screen text-baseDark dark:text-baseLight ">
+      <div className="bg-baseLight dark:bg-baseDark min-h-screen text-baseDark dark:text-baseLight font-asap text-lg tracking-wide">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

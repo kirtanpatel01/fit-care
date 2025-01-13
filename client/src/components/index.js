@@ -5,6 +5,7 @@ import Block from "./Block";
 import Button from "./Button";
 import Layout from "./Layout";
 import Sidebar from "./Sidebar";
+import HRLine from "./HRLine";
 
 export { 
     FormBlock, 
@@ -14,4 +15,5 @@ export {
     ActivityDesc,
     Layout,
     Sidebar,
+    HRLine,
 };
