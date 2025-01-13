@@ -49,8 +49,8 @@ function Sidebar() {
             <IoMenu size={32} className="p-0.5 md:p-0" />
           )}
         </button>
-        <div className="w-full flex flex-col items-center gap-4">
-          <span className="text-4xl font-bold tracking-wider text-secondary">
+        <div className="w-full flex flex-col items-center md:gap-4">
+          <span className="text-4xl font-bold tracking-wider text-secondary py-2 md:py-0">
             Fit Care
           </span>
           <div className="h-[1px] w-full bg-borderLight"></div>

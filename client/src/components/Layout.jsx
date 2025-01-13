@@ -7,7 +7,7 @@ const Layout = () => {
       <aside className="">
         <Sidebar />
       </aside>
-      <main className="p-4 overflow-y-auto">
+      <main className="overflow-y-auto">
         <Outlet /> {/* Renders the matched child route */}
       </main>
     </div>
