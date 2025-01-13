@@ -5,7 +5,7 @@ import { BsFillMoonStarsFill } from "react-icons/bs";
 
 function Sidebar() {
   const links = [
-    { path: "dashboard", title: "Dashboard" },
+    { path: "", title: "Dashboard" },
     { path: "meals", title: "Meals" },
     { path: "exercise", title: "Exercise" },
   ];
