@@ -6,6 +6,7 @@ import Button from "./Button";
 import Layout from "./Layout";
 import Sidebar from "./Sidebar";
 import HRLine from "./HRLine";
+import DarkModeBtn from "./DarkModeBtn";
 
 export { 
     FormBlock, 
@@ -16,4 +17,5 @@ export {
     Layout,
     Sidebar,
     HRLine,
+    DarkModeBtn,
 };

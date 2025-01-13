@@ -1,59 +1,33 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { HRLine } from "../components";
+import { ProfileBox, NotGivenData, NotAuthenticated } from "../container";
+import { TbLogout } from "react-icons/tb";
 
 function Dashboard() {
-  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [isGivenData, setIsGivenData] = useState(false);
+  const [isGivenData, setIsGivenData] = useState(true);
+  const [logoutDropdown, setLogoutDropdown] = useState(false);
+
+  if (!isAuthenticated) {
+    return <NotAuthenticated />;
+  }
 
   return (
     <div className="flex flex-col">
-      {!isAuthenticated && (
-        <div className="p-8 min-[475px]:p-4 lg:p-8 flex flex-col gap-4">
-          <div className="flex flex-col min-[475px]:flex-row gap-1 lg:gap-6 cormorant-garamond-bold font-semibold">
-            <span className="text-6xl min-[475px]:text-7xl sm:text-8xl lg:text-9xl">
-              Hey,
-            </span>
-            <span className="text-secondary text-7xl sm:text-8xl lg:text-9xl">
-              Buddy
-            </span>
-          </div>
-          <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl min-[475px]:p-8">
-            <span>
-              You aren't logged in, Please{" "}
-              <Link to={"/login"} className="text-secondary">
-                login
-              </Link>
-              !
-            </span>
-          </div>
-        </div>
-      )}
+      {!isGivenData && <NotGivenData />}
 
-      {!isGivenData && isAuthenticated && (
-        <div className="p-8 min-[475px]:p-4 lg:p-8 flex flex-col gap-4">
-          <div className="flex flex-col min-[475px]:flex-row gap-1 lg:gap-6 cormorant-garamond-bold font-semibold">
-            <span className="text-6xl min-[475px]:text-7xl sm:text-8xl lg:text-9xl">
-              Welcome,
-            </span>
-            <span className="text-secondary text-7xl sm:text-8xl lg:text-9xl">
-              Kiton
-            </span>
-          </div>
-          <span className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl flex flex-col gap-4 min-[475px]:p-8">
-            <span>You haven't given your data,</span>
-            <span className="w-fit">
-              Please give your{" "}
-              <Link to={"/collect-info"} className="text-secondary w-fit">
-                personal information
-              </Link>{" "}
-              to start your fitness journey!
-            </span>
-          </span>
-        </div>
-      )}
-      <HRLine />
+      <div
+        onMouseEnter={() => setLogoutDropdown(true)}
+        onMouseLeave={() => setLogoutDropdown(false)}
+        className="hidden md:flex flex-col gap-2 items-center absolute top-4 right-4 "
+      >
+        <ProfileBox />
+        {logoutDropdown && (
+          <button className="w-fit flex items-center justify-center gap-1 py-2 btn-hover px-4 rounded-full">
+            <TbLogout size={24} />
+            <span>Logout</span>
+          </button>
+        )}
+      </div>
     </div>
   );
 }
