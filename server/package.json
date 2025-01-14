@@ -4,14 +4,15 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npm i && node index.js",
-    "dev": "nodemon index.js",
+    "start": "npm i && node src/index.js",
+    "dev": "nodemon src/index.js",
     "build:client": "cd ../client && npm install --include=dev && npm run build"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
