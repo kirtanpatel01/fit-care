@@ -35,6 +35,22 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use((err, req, res, next) => {
+    if (err instanceof ApiError) {
+      return res.status(err.statusCode).json({
+        success: err.success,
+        message: err.message,
+        errors: err.errors,
+      });
+    }
+  
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      errors: [],
+    });
+  });
+  
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.get("*", (req, res) => {
