@@ -1,16 +1,18 @@
 import React from "react";
 import deamyy from "../../assets/deamyy_city.jpg";
+import profile from "../../assets/profile.svg";
+const profileImage = deamyy;
 
 function ProfileBox({ className='' }) {
   return (
     <div className={`${className}`}>
-      <div className="flex justify-between items-center drop-shadow-md cursor-pointer">
+      <div className="flex justify-between items-center drop-shadow-md cursor-pointer bg-white dark:bg-baseDark900 text-secondary rounded-full">
         <img
-          src={deamyy}
+          src={profileImage || profile}
           alt="deamyy"
-          className="h-14 w-14 md:h-20 md:w-20 rounded-full z-10 border-2 border-secondary"
+          className={`h-14 w-14 md:h-20 md:w-20 rounded-full ${profileImage ? 'p-2' : ' '}`}
         />
-        <span className="pl-12 md:pl-16 pr-3 md:pr-6 py-2 md:py-5 -ml-10 md:-ml-14 bg-white dark:bg-baseDark900 text-secondary rounded-full font-semibold text-xl md:text-2xl">
+        <span className="font-semibold text-lg md:text-xl pr-4">
           {"Kiton"}
         </span>
       </div>

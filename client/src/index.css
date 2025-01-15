@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 .input-outline {
-    @apply border bg-slate-400 bg-opacity-25 border-neutral-600 px-4 py-2 rounded-lg min-w-96 outline-none
+    @apply w-60 min-[320px]:w-full border bg-slate-400 bg-opacity-25 border-neutral-600 px-4 py-2 rounded-lg outline-none
 }
 
 .primary-btn {
     @apply w-fit px-4 py-2 rounded-md bg-slate-600 hover:bg-blue-600 font-medium
+}
+
+.secondary-btn {
+    @apply w-fit px-4 py-2 rounded-md font-medium border-2 border-blue-400
 }
 
 ::-webkit-scrollbar {

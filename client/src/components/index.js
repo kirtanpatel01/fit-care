@@ -7,6 +7,7 @@ import Layout from "./Layout";
 import Sidebar from "./Sidebar";
 import HRLine from "./HRLine";
 import DarkModeBtn from "./DarkModeBtn";
+import VRLine from "./VRLine";
 
 export { 
     FormBlock, 
@@ -18,4 +19,5 @@ export {
     Sidebar,
     HRLine,
     DarkModeBtn,
+    VRLine,
 };
