@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import profile from "../assets/profile.svg";
 import axios from "axios";
 import api from "../utils/axios";
+import { useUser } from "../context/UserContext";
 
 const serverUri = import.meta.env.VITE_REACT_SERVER_URL;
 
@@ -34,9 +35,10 @@ function Register() {
   const [success, setSuccess] = useState(null);
   const [isPending, setIsPending] = useState(null);
   const [preview, setPreview] = useState(null);
-  
+
   const navigate = useNavigate();
-  
+  const { login } = useUser();
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "profileImage") {
@@ -71,7 +73,7 @@ function Register() {
     if (formData.profileImage) {
       form.append("profileImage", formData.profileImage);
     }
-    setSuccess(null)
+    setSuccess(null);
     setError(null);
     setIsPending(true);
     try {
@@ -80,10 +82,26 @@ function Register() {
           "Content-Type": "multipart/form-data",
         },
       });
-      if(res.status === 200) {
-        navigate('/')
+      if (res.status === 200) {
+        setSuccess("Registration successful! Now we're logging you in...");
+
+        const loginRes = await api.post(
+          "/users/login",
+          {
+            username: formData.username,
+            password: formData.password,
+          },
+          { withCredentials: true }
+        );
+
+        if (loginRes.status === 200) {
+          login(loginRes.data.data.user);
+          setSuccess("Registration successful! Redirecting to dashboard...");
+          setTimeout(() => {
+            navigate("/"); // Redirect to dashboard
+          }, 200);
+        }
       }
-      setSuccess("Registration successful!");
     } catch (error) {
       if (error.response) {
         console.error("Server Error:", error.response.data.message);
@@ -100,13 +118,19 @@ function Register() {
     }
   };
 
+  if (success) {
+    return (
+      <Container>
+        <h1 className="text-5xl md:text-7xl font-bold">Register</h1>
+        <p className="text-green-500">{success}</p>
+      </Container>
+    );
+  }
 
   return (
     <Container>
       <h1 className="text-5xl md:text-7xl font-bold">Register</h1>
-      <FormBlock
-        className="w-full max-w-xl md:max-w-6xl"
-      >
+      <FormBlock className="w-full max-w-xl md:max-w-6xl">
         <div className="w-full max-w-md md:max-w-full grid md:grid-cols-[1fr_auto_1fr] items-center gap-8">
           <div className="flex flex-col items-center gap-4">
             <img
@@ -126,13 +150,15 @@ function Register() {
                   type="button"
                   className="bg-blue-500 px-4 py-2 rounded-md"
                 >
-                  {preview ? 'Edit Image' : 'Choose Image'}
+                  {preview ? "Edit Image" : "Choose Image"}
                 </button>
               </div>
 
               <button
                 onClick={handleRemoveImage}
-                className={`px-4 py-2 rounded-md ${preview ? 'bg-red-600' : 'bg-slate-300 cursor-not-allowed'}`}
+                className={`px-4 py-2 rounded-md ${
+                  preview ? "bg-red-600" : "bg-slate-300 cursor-not-allowed"
+                }`}
               >
                 Remove Image
               </button>

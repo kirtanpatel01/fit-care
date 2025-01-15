@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CgArrowsExchange } from "react-icons/cg";
 import api from "../utils/axios";
-
-const serverUri = import.meta.env.VITE_REACT_SERVER_URL;
+import { useUser } from "../context/UserContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useUser();
   const inputs = [
     { type: "text", placeholder: "Username", name: "username" },
     { type: "email", placeholder: "Email", name: "email" },
@@ -43,8 +43,9 @@ function Login() {
       const res = await api.post('/users/login', formData);
       if(res.status === 200) {
         navigate('/')
+        setSuccess('User logged in successfully!');
+        login(res.data.data.user);
       }
-      setSuccess('User logged in successfully!')
     } catch (error) {
       if (error.response) {
         console.error("Server Error:", error.response.data.message);

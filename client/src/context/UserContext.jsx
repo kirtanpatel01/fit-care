@@ -30,8 +30,25 @@ export const UserProvider = ({ children }) => {
 
     fetchUserData();
   }, []);
+
+  const login = (userData) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+  };
+
+  const logout = async() => {
+    try {
+        await api.post('/users/logout', {}, {
+            withCredentials: true
+        });
+        setUser(null);
+        setIsAuthenticated(false);
+    } catch (error) {
+        console.error('Error during logout: ', error)
+    }
+  }
   return (
-    <UserContext.Provider value={{ user, isAuthenticated, loading }}>
+    <UserContext.Provider value={{ user, isAuthenticated, loading, logout, login }}>
       {children}
     </UserContext.Provider>
   );

@@ -157,6 +157,25 @@ const getProfile = asyncHandler(async (req, res) => {
     );
 });
 
-const logoutUser = asyncHandler(async (req, res) => {});
+const logoutUser = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+
+    await User.findByIdAndUpdate(
+        userId,
+        {
+            $unset: {
+                refreshToken: 1,
+            },
+        },
+        {
+            new: true,
+        },
+    );
+
+    res.status(200)
+        .clearCookie("fitCare_accessToken")
+        .clearCookie("fitCare_refreshToken")
+        .json(new ApiResponse(200, {}, "User successfully logged out!"));
+});
 
 export { registerUser, loginUser, logoutUser, getProfile };

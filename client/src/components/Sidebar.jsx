@@ -6,6 +6,7 @@ import { ProfileBox } from "../container";
 import { TbLogout } from "react-icons/tb";
 import { DarkModeBtn, HRLine } from "../components";
 import deamyy from "../assets/deamyy_city.jpg";
+import profile from '../assets/profile.svg'
 import { useUser } from "../context/UserContext";
 
 function Sidebar() {
@@ -18,8 +19,7 @@ function Sidebar() {
   const [isVisible, setIsVisible] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [profileDropUp, setProfileDropUp] = useState(false);
-  const { user, isAuthenticated } = useUser();
-  console.log(user)
+  const { user, isAuthenticated, logout } = useUser();
 
   return (
     <div className="flex flex-col justify-between items-center bg-baseDark dark:bg-baseLight bg-opacity-10 dark:bg-opacity-5 md:h-screen md:p-4">
@@ -79,7 +79,9 @@ function Sidebar() {
             }`}
             >
               {isAuthenticated && (
-                <button className="w-full flex justify-center items-center gap-2 border border-secondary rounded-full px-4 py-2 btn-hover">
+                <button 
+                onClick={logout}
+                className="w-full flex justify-center items-center gap-2 border border-secondary rounded-full px-4 py-2 btn-hover">
                   <TbLogout />
                   <span>Logout</span>
                 </button>
@@ -91,6 +93,7 @@ function Sidebar() {
           )}
           <button
             onMouseOver={() => setProfileDropUp(true)}
+            className="w-full"
             // onClick={() => setProfileDropUp((prev) => !prev)}
           >
             <ProfileBox />
@@ -106,8 +109,8 @@ function Sidebar() {
             className="absolute right-1 top-1 flex md:hidden"
           >
             <img
-              src={deamyy}
-              alt="deamyy"
+              src={isAuthenticated ? user?.profileImage : profile }
+              alt={`${isAuthenticated ? user?.username : ""}-profileImage`}
               className="h-12 w-12 md:h-20 md:w-20 rounded-full z-10 border border-secondary"
             />
           </button>
@@ -119,14 +122,12 @@ function Sidebar() {
           <div onClick={() => setProfileDropDown(false)}>
             <ProfileBox />
           </div>
-          <HRLine />
           {isAuthenticated && (
-            <button className="flex items-center gap-2">
+            <button onClick={logout} className="flex items-center gap-2">
               <TbLogout />
               <span>Logout</span>
             </button>
           )}
-          <HRLine />
           <DarkModeBtn />
         </div>
       )}
