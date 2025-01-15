@@ -5,7 +5,6 @@ import profile from "../assets/profile.svg";
 import axios from "axios";
 
 const serverUri = import.meta.env.VITE_REACT_SERVER_URL;
-console.log(serverUri);
 
 function Register() {
   const inputs = [
@@ -34,14 +33,15 @@ function Register() {
   const [success, setSuccess] = useState(null);
   const [isPending, setIsPending] = useState(null);
   const [preview, setPreview] = useState(null);
-
+  
+  const navigate = useNavigate();
+  
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "profileImage") {
       const file = files[0];
       setFormData({ ...formData, profileImage: file });
 
-      // Generate a preview URL for the selected image
       if (file) {
         const previewUrl = URL.createObjectURL(file);
         setPreview(previewUrl);
@@ -52,7 +52,6 @@ function Register() {
   };
 
   const handleRemoveImage = () => {
-    // Reset both preview and formData.profileImage
     setPreview(null);
     setFormData({ ...formData, profileImage: null });
   };
@@ -80,7 +79,6 @@ function Register() {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(res.data);
       if(res.status === 200) {
         navigate('/')
       }
@@ -101,12 +99,13 @@ function Register() {
     }
   };
 
-  const navigate = useNavigate();
 
   return (
     <Container>
       <h1 className="text-5xl md:text-7xl font-bold">Register</h1>
-      <FormBlock>
+      <FormBlock
+        className="w-full max-w-xl md:max-w-6xl"
+      >
         <div className="w-full max-w-md md:max-w-full grid md:grid-cols-[1fr_auto_1fr] items-center gap-8">
           <div className="flex flex-col items-center gap-4">
             <img

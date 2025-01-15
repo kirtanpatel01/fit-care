@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npm i && node src/index.js",
     "dev": "nodemon src/index.js",
-    "build:client": "cd ../client && npm install --include=dev && npm run build"
+    "build:client": "cd ../client && npm run build",
+    "start": "npm run build:client && npm i && node src/index.js"
   },
   "author": "",
   "license": "ISC",

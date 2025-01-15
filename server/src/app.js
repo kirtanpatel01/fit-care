@@ -39,6 +39,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/users", userRoutes);
 
+app.use(express.static(path.resolve(__dirname, "../../client/dist")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
+
 app.use((err, req, res, next) => {
     if (err instanceof ApiError) {
         return res.status(err.statusCode).json({
@@ -55,11 +61,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
 
 io.on("connection", (socket) => {
     console.log("A user connected!");

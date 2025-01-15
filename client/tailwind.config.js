@@ -5,6 +5,14 @@ export default {
     "./index.html",
 		"./src/**/*.{js,ts,jsx,tsx}",
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8002', // Redirect API calls to the backend
+        changeOrigin: true,
+      },
+    },
+  },
   theme: {
     extend: {
       colors: {

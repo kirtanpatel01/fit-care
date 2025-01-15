@@ -5,6 +5,11 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
+const options = {
+    httpOnly: true,
+    secure: true
+}
+
 const generrateAccessAndRefreshTokens = async (userId) => {
     try {
         const user = await User.findById(userId);
@@ -77,7 +82,59 @@ const registerUser = asyncHandler(async (req, res) => {
         );
 });
 
-const loginUser = asyncHandler(async (req, res) => {});
+const loginUser = asyncHandler(async (req, res) => {
+    console.log(req.body)
+    const { username, email, phone, password } = req.body;
+
+    if(![username, email, phone].some((field) => field)) {
+        throw new ApiError(401, "Username, email or phone number, alteast one field is required!")
+    }
+
+    const user = await User.findOne({
+        $or: [{ username }, { email }, { phone }]
+    })
+
+    console.log(user);
+
+    if(!user) {
+        throw new ApiError(404, "User doesn't exists with this credential!")
+    }
+
+    const isPasswordValid = await user.isPasswordCorrect(password);
+
+    console.log(isPasswordValid)
+
+    if(!isPasswordValid) {
+        throw new ApiError(404, "Invalid password!")
+    }
+
+    const { accessToken, refreshToken } = await generrateAccessAndRefreshTokens( user._id )
+
+    console.log(accessToken, refreshToken);
+
+    console.log(user._id)
+    const loggedInUser = await User.findById(user._id).select(
+        '-password -refreshToken'
+    )
+
+    console.log(loggedInUser)
+    
+   return res
+   .status(200)
+   .cookie('fitCare_accessToken', accessToken, options)
+   .cookie('fitCare_refreshToken', refreshToken, options)
+   .json(
+    new ApiResponse(
+        200,
+        {
+            user: loggedInUser,
+            accessToken,
+            refreshToken
+        },
+        "User logged in successsfully"
+    )
+   )
+});
 
 const logoutUser = asyncHandler(async (req, res) => {});
 
