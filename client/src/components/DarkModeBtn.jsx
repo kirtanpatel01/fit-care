@@ -30,16 +30,16 @@ function DarkModeBtn() {
   return (
     <button
       onClick={toggleDarkMode}
-      className="flex justify-center mb-2"
+      className="flex justify-center"
     >
       {isDarkMode ? (
         <div className="flex items-center">
-          <TiWeatherSunny size={36} className="p-1 md:p-0" />
+          <TiWeatherSunny size={36} className="p-1" />
           <span className="">Light</span>
         </div>
       ) : (
-        <div className="flex items-center text-baseDark">
-          <IoMdMoon size={34} className="p-1 md:p-0" />
+        <div className="flex items-center">
+          <IoMdMoon size={34} className="p-1" />
           <span className="">Dark</span>
         </div>
       )}

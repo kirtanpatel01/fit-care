@@ -16,10 +16,15 @@ function Sidebar() {
 
   const [isVisible, setIsVisible] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
+  const [profileDropUp, setProfileDropUp] = useState(false);
 
   return (
     <div className="flex flex-col justify-between items-center bg-baseDark dark:bg-baseLight bg-opacity-10 dark:bg-opacity-5 md:h-screen md:p-4">
-      <nav className="flex flex-col items-center md:gap-8">
+      <nav
+        className={`flex flex-col items-center md:gap-8 ${
+          profileDropUp ? "bg-red-6000" : ""
+        }`}
+      >
         <button
           onClick={() => {
             setIsVisible((prev) => !prev);
@@ -40,7 +45,7 @@ function Sidebar() {
           <div className="h-[1px] w-full bg-borderLight"></div>
         </div>
         <ul
-          className={`z-10 absolute top-16 md:top-0 md:relative flex-col items-center gap-8 py-4 md:py-0 bg-baseLight md:bg-transparent md:dark:bg-transparent bg-opacity-95 dark:bg-baseDark dark:bg-opacity-95 border border-borderLight md:border-none rounded-xl right-2 left-2 md:right-0 md:left-0
+          className={`z-10 absolute top-16 md:top-0 md:relative flex-col items-center gap-8 py-4 md:py-0 bg-baseLight md:bg-transparent md:dark:bg-transparent bg-opacity-95 dark:bg-baseDark dark:bg-opacity-95 border border-borderLight md:border-none rounded-xl right-2 left-2 md:right-0 md:left-0 transform animate-slideDown
           ${isVisible ? "flex" : "hidden md:flex"}`}
         >
           {links.map((link) => (
@@ -54,6 +59,38 @@ function Sidebar() {
             </Link>
           ))}
         </ul>
+
+        {/* Profile box and settings */}
+        <div
+          onMouseEnter={() => setProfileDropUp(true)}
+          onMouseLeave={() => setProfileDropUp(false)}
+          className="absolute bottom-4 hidden md:flex flex-col gap-4"
+        >
+          {profileDropUp && (
+            <div
+              className={`w-full p-2 flex-col items-center gap-2 hidden md:flex shadow-md rounded-3xl bg-baseLight50 bg-opacity-75 dark:bg-baseDark900 dark:bg-opacity-75
+            transition-transform duration-300 ease-out transform ${
+              profileDropUp
+                ? "translate-y-0 opacity-100 animate-slideUp"
+                : "translate-y-10 opacity-0"
+            }`}
+            >
+              <button className="w-full flex justify-center items-center gap-2 border border-secondary rounded-full px-4 py-2 btn-hover">
+                <TbLogout />
+                <span>Logout</span>
+              </button>
+              <div className="w-full flex justify-center border border-secondary rounded-full px-4 py-1 btn-hover">
+                <DarkModeBtn />
+              </div>
+            </div>
+          )}
+          <button
+            onMouseOver={() => setProfileDropUp(true)}
+            // onClick={() => setProfileDropUp((prev) => !prev)}
+          >
+            <ProfileBox />
+          </button>
+        </div>
 
         {!profileDropDown && (
           <button
@@ -73,7 +110,7 @@ function Sidebar() {
       </nav>
 
       {profileDropDown && (
-        <div className="absolute top-1 right-1 p-2 flex flex-col items-center gap-4 md:hidden border border-borderLight rounded-lg bg-baseLight50 bg-opacity-75 dark:bg-baseDark900 dark:bg-opacity-50">
+        <div className="absolute top-1 right-1 p-2 flex flex-col items-center gap-4 md:hidden border border-borderLight rounded-lg bg-baseLight50 bg-opacity-75 dark:bg-baseDark900 dark:bg-opacity-50 transform animate-slideDown">
           <div onClick={() => setProfileDropDown(false)}>
             <ProfileBox />
           </div>
@@ -86,10 +123,6 @@ function Sidebar() {
           <DarkModeBtn />
         </div>
       )}
-
-      <div className="hidden md:flex">
-        <DarkModeBtn />
-      </div>
     </div>
   );
 }
