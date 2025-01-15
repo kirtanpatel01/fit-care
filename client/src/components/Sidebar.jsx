@@ -6,6 +6,7 @@ import { ProfileBox } from "../container";
 import { TbLogout } from "react-icons/tb";
 import { DarkModeBtn, HRLine } from "../components";
 import deamyy from "../assets/deamyy_city.jpg";
+import { useUser } from "../context/UserContext";
 
 function Sidebar() {
   const links = [
@@ -17,6 +18,8 @@ function Sidebar() {
   const [isVisible, setIsVisible] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [profileDropUp, setProfileDropUp] = useState(false);
+  const { user, isAuthenticated } = useUser();
+  console.log(user)
 
   return (
     <div className="flex flex-col justify-between items-center bg-baseDark dark:bg-baseLight bg-opacity-10 dark:bg-opacity-5 md:h-screen md:p-4">
@@ -75,10 +78,12 @@ function Sidebar() {
                 : "translate-y-10 opacity-0"
             }`}
             >
-              <button className="w-full flex justify-center items-center gap-2 border border-secondary rounded-full px-4 py-2 btn-hover">
-                <TbLogout />
-                <span>Logout</span>
-              </button>
+              {isAuthenticated && (
+                <button className="w-full flex justify-center items-center gap-2 border border-secondary rounded-full px-4 py-2 btn-hover">
+                  <TbLogout />
+                  <span>Logout</span>
+                </button>
+              )}
               <div className="w-full flex justify-center border border-secondary rounded-full px-4 py-1 btn-hover">
                 <DarkModeBtn />
               </div>
@@ -115,10 +120,12 @@ function Sidebar() {
             <ProfileBox />
           </div>
           <HRLine />
-          <button className="flex items-center gap-2">
-            <TbLogout />
-            <span>Logout</span>
-          </button>
+          {isAuthenticated && (
+            <button className="flex items-center gap-2">
+              <TbLogout />
+              <span>Logout</span>
+            </button>
+          )}
           <HRLine />
           <DarkModeBtn />
         </div>

@@ -3,6 +3,7 @@ import { FormBlock, Container, VRLine } from "../components";
 import { useNavigate } from "react-router-dom";
 import profile from "../assets/profile.svg";
 import axios from "axios";
+import api from "../utils/axios";
 
 const serverUri = import.meta.env.VITE_REACT_SERVER_URL;
 
@@ -74,7 +75,7 @@ function Register() {
     setError(null);
     setIsPending(true);
     try {
-      const res = await axios.post(`${serverUri}/api/v1/users/register`, form, {
+      const res = await api.post(`/users/register`, form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

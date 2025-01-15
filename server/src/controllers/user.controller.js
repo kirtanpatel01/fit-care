@@ -7,8 +7,8 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const options = {
     httpOnly: true,
-    secure: true
-}
+    secure: true,
+};
 
 const generrateAccessAndRefreshTokens = async (userId) => {
     try {
@@ -29,7 +29,8 @@ const generrateAccessAndRefreshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { fullName, username, email, phone, password, confirmPassword } = req.body;
+    const { fullName, username, email, phone, password, confirmPassword } =
+        req.body;
     if (
         [fullName, username, email, phone, password, confirmPassword].some(
             (field) => !field,
@@ -62,8 +63,8 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(409, "User already exists!");
     }
 
-    if(password !== confirmPassword) {
-        throw new ApiError(400, 'Password and confirm password are not same!')
+    if (password !== confirmPassword) {
+        throw new ApiError(400, "Password and confirm password are not same!");
     }
 
     const user = await User.create({
@@ -77,65 +78,85 @@ const registerUser = asyncHandler(async (req, res) => {
 
     return res
         .status(200)
-        .json(
-            new ApiResponse(200, user, "User created successfully!"),
-        );
+        .json(new ApiResponse(200, user, "User created successfully!"));
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     const { username, email, phone, password } = req.body;
 
-    if(![username, email, phone].some((field) => field)) {
-        throw new ApiError(401, "Username, email or phone number, alteast one field is required!")
+    if (![username, email, phone].some((field) => field)) {
+        throw new ApiError(
+            401,
+            "Username, email or phone number, alteast one field is required!",
+        );
     }
 
     const user = await User.findOne({
-        $or: [{ username }, { email }, { phone }]
-    })
+        $or: [{ username }, { email }, { phone }],
+    });
 
     console.log(user);
 
-    if(!user) {
-        throw new ApiError(404, "User doesn't exists with this credential!")
+    if (!user) {
+        throw new ApiError(404, "User doesn't exists with this credential!");
     }
 
     const isPasswordValid = await user.isPasswordCorrect(password);
 
-    console.log(isPasswordValid)
+    console.log(isPasswordValid);
 
-    if(!isPasswordValid) {
-        throw new ApiError(404, "Invalid password!")
+    if (!isPasswordValid) {
+        throw new ApiError(404, "Invalid password!");
     }
 
-    const { accessToken, refreshToken } = await generrateAccessAndRefreshTokens( user._id )
+    const { accessToken, refreshToken } = await generrateAccessAndRefreshTokens(
+        user._id,
+    );
 
     console.log(accessToken, refreshToken);
 
-    console.log(user._id)
+    console.log(user._id);
     const loggedInUser = await User.findById(user._id).select(
-        '-password -refreshToken'
-    )
+        "-password -refreshToken",
+    );
 
-    console.log(loggedInUser)
-    
-   return res
-   .status(200)
-   .cookie('fitCare_accessToken', accessToken, options)
-   .cookie('fitCare_refreshToken', refreshToken, options)
-   .json(
-    new ApiResponse(
-        200,
-        {
-            user: loggedInUser,
-            accessToken,
-            refreshToken
-        },
-        "User logged in successsfully"
-    )
-   )
+    console.log(loggedInUser);
+
+    return res
+        .status(200)
+        .cookie("fitCare_accessToken", accessToken, options)
+        .cookie("fitCare_refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(
+                200,
+                {
+                    user: loggedInUser,
+                    accessToken,
+                    refreshToken,
+                },
+                "User logged in successsfully",
+            ),
+        );
+});
+
+const getProfile = asyncHandler(async (req, res) => {
+    const user = req.user;
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            {
+                profileImage: user.profileImage,
+                username: user.username,
+                fullName: user.fullName,
+                email: user.email,
+            },
+            "Profile data is fetched successfully!",
+        ),
+    );
 });
 
 const logoutUser = asyncHandler(async (req, res) => {});
 
-export { registerUser, loginUser, logoutUser };
+export { registerUser, loginUser, logoutUser, getProfile };

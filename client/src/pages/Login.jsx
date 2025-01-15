@@ -3,6 +3,7 @@ import { FormBlock, Container } from "../components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CgArrowsExchange } from "react-icons/cg";
+import api from "../utils/axios";
 
 const serverUri = import.meta.env.VITE_REACT_SERVER_URL;
 
@@ -39,7 +40,7 @@ function Login() {
     setIsPending(true);
 
     try {
-      const res = await axios.post(`${serverUri}/api/v1/users/login`, formData);
+      const res = await api.post('/users/login', formData);
       if(res.status === 200) {
         navigate('/')
       }
