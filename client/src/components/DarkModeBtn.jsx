@@ -3,44 +3,38 @@ import { TiWeatherSunny } from "react-icons/ti";
 import { IoMdMoon } from "react-icons/io";
 
 function DarkModeBtn() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  // Initialize state from localStorage or default to system preference
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) return savedTheme === "dark";
+    // If no saved theme, default to system preference
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
 
   useEffect(() => {
-    const currentTheme = localStorage.getItem("theme");
-    if (currentTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    if (!isDarkMode) {
+    // Apply theme to <html> element
+    if (isDarkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
-  };
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => setIsDarkMode((prevMode) => !prevMode);
+
   return (
-    <button
-      onClick={toggleDarkMode}
-      className="flex justify-center"
-    >
+    <button onClick={toggleDarkMode} className="flex justify-center">
       {isDarkMode ? (
         <div className="flex items-center">
           <TiWeatherSunny size={36} className="p-1" />
-          <span className="">Light</span>
+          <span>Light</span>
         </div>
       ) : (
         <div className="flex items-center">
           <IoMdMoon size={34} className="p-1" />
-          <span className="">Dark</span>
+          <span>Dark</span>
         </div>
       )}
     </button>
